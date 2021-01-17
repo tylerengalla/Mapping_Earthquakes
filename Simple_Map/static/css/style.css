@@ -6,3 +6,6 @@ body,
     padding: 0;
     margin: 0;
 }
+/* <!-- Dashes and gaps of the same size -->
+<line 29 x1="0" y1="3" x2="30" y2="3" stroke="black"
+        stroke-dasharray="4" /> */
