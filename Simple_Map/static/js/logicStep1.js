@@ -1,5 +1,11 @@
 // Add console.log to check to see if our code is working
 console.log("working");
+// ---------------------------------------------------------
+// ---------------------------------------------------------
+
+
+// ---------------------------------------------------------
+// ---------------------------------------------------------
 
 // Create the map object with a center and zoom level
 // let map = L.map('mapid').setView([40.7, -94.5], 4);
@@ -19,9 +25,13 @@ console.log("working");
 //   zoom: 2,
 //   layers: [streets]
 // });
+// ---------------------------------------------------------
+// ---------------------------------------------------------
+
+
 
 // ---------------------------------------------------------
-// 
+// MAPPING SINGLE POINTS
 // ---------------------------------------------------------
 // Add a single marker to the map for Los Angeles, California.
 // let marker = L.circleMarker([34.0522, -118.2437], {
@@ -35,7 +45,7 @@ console.log("working");
 
 
 // ---------------------------------------------------------
-// 
+// MAPPING MULTIPLE POINTS AND MAPPING LINES 
 // ---------------------------------------------------------
 // Get data from cities.js
 // let cityData = cities;
@@ -72,7 +82,7 @@ console.log("working");
 
 
 // ---------------------------------------------------------
-// 
+// MAPPING GEOJSON POINTS
 // ---------------------------------------------------------
 
 // Add GeoJSON data.
@@ -140,18 +150,22 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 //  Create a base layer that holds both maps
 let baseMaps = {
   "Streets": streets,
-  "Satellite Streets": satelliteStreets
+  "Satellite": satelliteStreets
 };
 
 // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
-  center: [43.7, -79.3],
-  zoom: 11,
-  layers: [satelliteStreets]
+  center: [39.5, -98.5],
+  zoom: 3,
+  layers: [streets]
 });
 
 // Pass our map layers into our layers control and add the layers control to the map.
 L.control.layers(baseMaps).addTo(map);
+// ---------------------------------------------------------
+// ---------------------------------------------------------
+
+
 
 // // Then we add our 'graymap' tile layer to the map.
 // streets.addTo(map)
@@ -159,7 +173,7 @@ L.control.layers(baseMaps).addTo(map);
 
 
 // ---------------------------------------------------------
-// 
+// MAPPING GEOJSON POINTS WITH POPUPS 
 // ---------------------------------------------------------
 // // Accessing the airport GeoJSON URL
 // let airportData = 'https://raw.githubusercontent.com/tylerengalla/Mapping_Earthquakes/main/majorAirports.json';
@@ -184,7 +198,7 @@ L.control.layers(baseMaps).addTo(map);
 
 
 // ---------------------------------------------------------
-//  AIRLINE FLIGHT PATHS - LINESTRINGS
+//  MAPPING GEOJSON LINESTRINGS 
 // ---------------------------------------------------------
 // Accessing the Toronto airline routes GeoJSON URL.
 // let torontoData = 'https://raw.githubusercontent.com/tylerengalla/Mapping_Earthquakes/main/torontoRoutes.json';
@@ -211,27 +225,38 @@ L.control.layers(baseMaps).addTo(map);
 
 
 // ---------------------------------------------------------
-// POLYGONS
+// MAPPING GEOJSOON POLYGONS
 // ---------------------------------------------------------
 // Accessing the Toronto neighborhoods GeoJSON URL
-let torontoHoods = 'https://raw.githubusercontent.com/tylerengalla/Mapping_Earthquakes/main/torontoNeighborhoods.json'
+// let torontoHoods = 'https://raw.githubusercontent.com/tylerengalla/Mapping_Earthquakes/main/torontoNeighborhoods.json'
 
-// Create a style 
-let myStyle = {
-  color: 'yellow',
-  weight: 1
-}
-//  Grabbing out GeoJson Data
-d3.json(torontoHoods).then(function(data){
-  console.log(data);
-  L.geoJSON(data, {
-    style: myStyle,
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup("<h2>" + "Neighborhood: " + feature.properties.AREA_NAME + "</h2>")
-    }
-  }).addTo(map);
+// // Create a style 
+// let myStyle = {
+//   color: 'yellow',
+//   weight: 1
+// }
+// //  Grabbing out GeoJson Data
+// d3.json(torontoHoods).then(function(data){
+//   console.log(data);
+//   L.geoJSON(data, {
+//     style: myStyle,
+//     onEachFeature: function(feature, layer) {
+//       layer.bindPopup("<h2>" + "Neighborhood: " + feature.properties.AREA_NAME + "</h2>")
+//     }
+//   }).addTo(map);
+// });
+// ---------------------------------------------------------
+// ---------------------------------------------------------
+
+
+// ---------------------------------------------------------
+//  ADDING EARTHQUAKE DATA 
+// ---------------------------------------------------------
+// Retrieve the earthquake data 
+d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
+  // Creating a GeoJson layer with the retrieved data
+  L.geoJson(data).addTo(map);
 });
-
 // ---------------------------------------------------------
 // ---------------------------------------------------------
 
